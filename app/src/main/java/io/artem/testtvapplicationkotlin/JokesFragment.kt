@@ -1,25 +1,37 @@
 package io.artem.testtvapplicationkotlin
 
+import android.icu.lang.UCharacter
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.leanback.app.BrowseSupportFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class JokesFragment : BrowseSupportFragment(){
+class JokesFragment : Fragment(){
 
     var jokes: ArrayList<JokeModel> = ArrayList()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.w("Time tag","Creating fragment")
         super.onCreate(savedInstanceState)
-        title = "Список анеков"
+        //Log.w("Time tag","Setting title")
+        //title = "Список анеков"
 
 
     }
 
 
 
-    internal fun setJokeContent(response: JokeModel){
+     fun setJokeContent(response: JokeModel){
+        Log.w("Time tag","Entered the setJokeContent")
         val recycler = view?.findViewById(R.id.posts_recycle_view) as RecyclerView
+        Log.w("Time tag","Created recycler")
+        val manager = LinearLayoutManager(context)
+        Log.w("Time tag","Created LinearLayoutManager")
+       // recycler.layoutManager = manager
+        Log.w("Time tag","Set manager to recycler")
         Log.w("Response tag",response.toString())
         jokes.add(response)
         Log.w("Jokes tag",jokes.toString())
