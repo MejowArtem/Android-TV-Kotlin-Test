@@ -4,7 +4,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/cardview_dark_background">
 
 
 
@@ -19,7 +20,7 @@
         android:text="Jokes List" />
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layoutManager="androidx.recyclerview.widget.RecyclerView"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
         android:id="@+id/posts_recycle_view"
         android:textAlignment="center"
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/jokes_page_name"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp" > Test Text </androidx.recyclerview.widget.RecyclerView>
 
 
 

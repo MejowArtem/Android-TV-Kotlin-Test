@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 class JokesFragment : Fragment(){
 
     var jokes: ArrayList<JokeModel> = ArrayList()
-
+    val recycler = view?.findViewById(R.id.posts_recycle_view) as? RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.w("Time tag","Creating fragment")
@@ -26,19 +26,21 @@ class JokesFragment : Fragment(){
 
      fun setJokeContent(response: JokeModel){
         Log.w("Time tag","Entered the setJokeContent")
-        val recycler = view?.findViewById(R.id.posts_recycle_view) as RecyclerView
+
         Log.w("Time tag","Created recycler")
         val manager = LinearLayoutManager(context)
         Log.w("Time tag","Created LinearLayoutManager")
-       // recycler.layoutManager = manager
-        Log.w("Time tag","Set manager to recycler")
+        //recycler?.layoutManager = manager
+        //Log.w("Time tag","Set manager to recycler")
         Log.w("Response tag",response.toString())
-        jokes.add(response)
+        jokes.add(response);
+         jokes.add(response);
+         jokes.add(response);
         Log.w("Jokes tag",jokes.toString())
         val adapter = JokeAdapter(jokes)
         Log.w("Adapter tag",adapter.toString())
-        recycler.setAdapter(adapter)
-
+        recycler?.adapter = adapter
+         Log.w("Recycler adapter tag", recycler?.adapter.toString())
         //imageDrawable
         //setDefaultBackground(TRANSLUCENT)
         /*buttonText = resources.getString(R.string.dismiss_error)
