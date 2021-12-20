@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.artem.testtvapplicationkotlin.RetrofitClient.retrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,18 +16,23 @@ import retrofit2.Response
  class BrowseJokesActivity : FragmentActivity() {
 
     private lateinit var mJokesFragment: JokesFragment
-
+    var manager: LinearLayoutManager? = null
+     var recycler: RecyclerView? = null
+     var jokes: ArrayList<JokeModel> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.w("Time tag","Setting content view")
         setContentView(R.layout.jokes_recycle_view)
-        if (savedInstanceState == null) {
+         recycler = findViewById(R.id.posts_recycle_view)
+        recycler?.layoutManager = LinearLayoutManager(this)
+       /* if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                 .replace(R.id.posts_recycle_view, MainFragment())
                 .commitNow()
-        }
+        }*/
         Log.w("Time tag","Calling testJokes")
+        manager = LinearLayoutManager(this)
         testJokes()
     }
 
@@ -52,7 +58,7 @@ import retrofit2.Response
             override fun onResponse(call: Call<JokeModel>, response: Response<JokeModel>) {
                 Log.w("Time tag","GET successful. Calling the setJokeContent now")
                //Toast.makeText(baseContext, response.body().toString() , Toast.LENGTH_LONG).show();
-                response.body()?.let { mJokesFragment.setJokeContent(it) }
+                setJokeContent(response.body())
             }
 
             override fun onFailure(call: Call<JokeModel>, t: Throwable) {
@@ -60,6 +66,22 @@ import retrofit2.Response
             }
         })
     }
+
+     var jokesCount = 0
+     fun setJokeContent(response: JokeModel?){
+         Log.w("Time tag","Entered the setJokeContent")
+         Log.w("Response tag",response.toString())
+
+         response?.let { jokes.add(it) };
+         if(jokesCount <3) {
+             jokesCount++
+             testJokes()
+
+         }
+
+         val jokeAdapter = JokeAdapter(jokes)
+         recycler?.adapter = jokeAdapter
+     }
 
 
     companion object {

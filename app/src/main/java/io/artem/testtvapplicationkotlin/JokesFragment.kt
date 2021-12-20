@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class JokesFragment : Fragment(){
 
-    var jokes: ArrayList<JokeModel> = ArrayList()
-    val recycler = view?.findViewById(R.id.posts_recycle_view) as? RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.w("Time tag","Creating fragment")
@@ -24,24 +22,22 @@ class JokesFragment : Fragment(){
 
 
 
-     fun setJokeContent(response: JokeModel){
+     fun setJokeContent(response: JokeModel, manager: LinearLayoutManager?){
         Log.w("Time tag","Entered the setJokeContent")
-
+         var jokes: ArrayList<JokeModel> = ArrayList()
         Log.w("Time tag","Created recycler")
-        val manager = LinearLayoutManager(context)
-        Log.w("Time tag","Created LinearLayoutManager")
-        //recycler?.layoutManager = manager
-        //Log.w("Time tag","Set manager to recycler")
+         val recycler = view?.findViewById(R.id.posts_recycle_view) as? RecyclerView
+        recycler?.layoutManager = manager
+        Log.w("Time tag","Set manager to recycler")
         Log.w("Response tag",response.toString())
         jokes.add(response);
-         jokes.add(response);
-         jokes.add(response);
         Log.w("Jokes tag",jokes.toString())
-        val adapter = JokeAdapter(jokes)
-        Log.w("Adapter tag",adapter.toString())
-        recycler?.adapter = adapter
+
+        val jokeAdapter = JokeAdapter(jokes)
+         jokeAdapter.notifyDataSetChanged()
+        Log.w("Adapter tag",jokeAdapter.itemCount.toString())
+        recycler?.adapter = jokeAdapter
          Log.w("Recycler adapter tag", recycler?.adapter.toString())
-        //imageDrawable
         //setDefaultBackground(TRANSLUCENT)
         /*buttonText = resources.getString(R.string.dismiss_error)
         buttonClickListener = View.OnClickListener {
